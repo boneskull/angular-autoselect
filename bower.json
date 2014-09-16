@@ -1,12 +1,12 @@
 {
-  "name": "angular-range",
+  "name": "angular-selection",
   "version": "0.1.0",
-  "homepage": "https://github.com/boneskull/angular-range",
+  "homepage": "https://github.com/boneskull/angular-selection",
   "authors": [
     "Christopher Hiller <chiller@badwing.com>"
   ],
-  "description": "AngularJS directives for working with text ranges",
-  "main": "range.js",
+  "description": "AngularJS directives for working with text selections within input fields",
+  "main": "selection.js",
   "moduleType": [
     "amd",
     "globals",
@@ -18,14 +18,14 @@
     "range",
     "text",
     "select",
-    "selection"
+    "selection",
+    "input",
+    "fields"
   ],
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
-    "support",
-    "test",
     "Gruntfile.js",
     "package.json"
   ],

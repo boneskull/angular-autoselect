@@ -43,13 +43,13 @@ module.exports = function (grunt) {
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
           '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-          '* Copyright (c) <%= grunt.template.today("yyyy") %> Decipher, Inc.;' +
+          '* Copyright (c) <%= grunt.template.today("yyyy") %> Christopher Hiller;' +
           ' Licensed <%= pkg.license %> */',
         sourceMap: true
       },
       dist: {
         src: '<%= pkg.main %>',
-        dest: 'range.min.js'
+        dest: 'selection.min.js'
       }
     }
 
