@@ -54,7 +54,7 @@
     var TEXTAREA = 'TEXTAREA';
 
       /**
-       * Select the text in an editable node.  Defaults to select all text.
+       * Select the text in an input node.  Defaults to select all text.
        * @param {RangeOptions} [options] Options
        * @todo Evaluate completely loosening restrictions on nodes
        */
@@ -79,7 +79,7 @@
   rangeSelectCtrl.$inject = ['$scope', '$element', '$attrs'];
 
   /**
-   * Directive to automatically select all text within a node upon link
+   * Directive to automatically select all text within a node upon initial render
    * @returns {Object} DDO
    * @see https://docs.angularjs.org/api/ng/service/$compile
    */
@@ -90,12 +90,14 @@
       compile: function compile(tElm) {
         tElm.focus();
         return function link(scope, el, attrs, ngModel) {
-          ngModel.$render = function render() {
+          var render = ngModel.$render;
+          ngModel.$render = function $render() {
             if (ngModel.$isEmpty(ngModel.$viewValue)) {
               el.val('');
             } else {
               el.val(ngModel.$viewValue);
               scope.$rangeSelect();
+              ngModel.$render = render;
             }
           };
         };
@@ -124,7 +126,7 @@
   selectAllTextDirective.$name = 'selectAllText';
 
   /**
-   * Directive to automatically select arbitrary range within node when linked
+   * Directive to automatically select arbitrary range within node upon initial render
    * @returns {Object} DDO
    * @see https://docs.angularjs.org/api/ng/service/$compile
    */
@@ -135,12 +137,14 @@
       compile: function compile(tElm) {
         tElm.focus();
         return function link(scope, el, attrs, ngModel) {
-          ngModel.$render = function render() {
+          var render = ngModel.$render;
+          ngModel.$render = function $render() {
             if (ngModel.$isEmpty(ngModel.$viewValue)) {
               el.val('');
             } else {
               el.val(ngModel.$viewValue);
               scope.$rangeSelect(rangeParseOptions(scope, attrs));
+              ngModel.$render = render;
             }
           };
         };
