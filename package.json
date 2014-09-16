@@ -1,0 +1,35 @@
+{
+  "name": "angular-range",
+  "version": "0.1.0",
+  "description": "AngularJS directives for working with text ranges",
+  "main": "range.js",
+  "peerDependencies": {
+    "angular": "^1.2.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/boneskull/angular-range.git"
+  },
+  "keywords": [
+    "angular",
+    "angularjs",
+    "range",
+    "text",
+    "select",
+    "selection"
+  ],
+  "author": "Christopher Hiller <chiller@badwing.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/boneskull/angular-range/issues"
+  },
+  "homepage": "https://github.com/boneskull/angular-range",
+  "devDependencies": {
+    "grunt-bump": "0.0.15",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-uglify": "^0.5.1",
+    "jshint-stylish": "^0.4.0",
+    "load-grunt-tasks": "^0.6.0",
+    "time-grunt": "^1.0.0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "angular-range",
+  "version": "0.1.0",
+  "homepage": "https://github.com/boneskull/angular-range",
+  "authors": [
+    "Christopher Hiller <chiller@badwing.com>"
+  ],
+  "description": "AngularJS directives for working with text ranges",
+  "main": "range.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "angular",
+    "angularjs",
+    "range",
+    "text",
+    "select",
+    "selection"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "support",
+    "test",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "angular": "*"
+  }
+}
