@@ -2,7 +2,11 @@
 
 AngularJS directives to select text within input fields
 
-## Example
+## Usage
+
+```js
+angular.module('myModule', ['badwing.selection']);
+```
 
 Automatically select all text in an input field when it is initially rendered:
 

@@ -18,18 +18,25 @@
 
   /**
    *
-   * @typedef {Object} RangeOptions
+   * @typedef {Object} SelectionOptions
    * @property {number} begin Where to begin the range selection
    * @property {number} end Where to end the range selection
    */
+
+  var selectTextDirective,
+    autoSelectTextDirective,
+    selectAllTextDirective,
+    autoSelectAllTextDirective,
+    selectionParseOptions,
+    selectionSelectCtrl;
 
   /**
    * Parses directive options from attributes
    * @param {angular.Scope} scope AngularJS Scope
    * @param {$compile.directive.Attributes} attrs AngularJS Attributes object
-   * @returns {RangeOptions}
+   * @returns {SelectionOptions}
    */
-  var rangeParseOptions = function rangeParseOptions(scope, attrs) {
+  selectionParseOptions = function selectionParseOptions(scope, attrs) {
     var options = scope.$eval(attrs.selectText) || {};
     if (!angular.isObject(options)) {
       options = {};
@@ -44,7 +51,7 @@
    * @param {angular.Scope} $scope AngularJS Scope
    * @param {angular.element} $element jqLite/jQuery Element
    */
-  var rangeSelectCtrl = function rangeSelectCtrl($scope, $element) {
+  selectionSelectCtrl = function selectionSelectCtrl($scope, $element) {
 
     /**
      * The node name of a <textarea> element
@@ -55,7 +62,7 @@
 
       /**
        * Select the text in an input node.  Defaults to select all text.
-       * @param {RangeOptions} [options] Options
+       * @param {SelectionOptions} [options] Options
        * @todo Evaluate completely loosening restrictions on nodes
        */
     $scope.$rangeSelect = function $rangeSelect(options) {
@@ -76,16 +83,11 @@
 
     };
   };
-  rangeSelectCtrl.$inject = ['$scope', '$element', '$attrs'];
+  selectionSelectCtrl.$inject = ['$scope', '$element', '$attrs'];
 
-  /**
-   * Directive to automatically select all text within a node upon initial render
-   * @returns {Object} DDO
-   * @see https://docs.angularjs.org/api/ng/service/$compile
-   */
-  var autoSelectAllTextDirective = function autoSelectAllTextDirective() {
+  autoSelectAllTextDirective = function autoSelectAllTextDirective() {
     return {
-      controller: 'rangeSelectCtrl',
+      controller: 'selectionSelectCtrl',
       require: 'ngModel',
       compile: function compile(tElm) {
         tElm.focus();
@@ -106,14 +108,9 @@
   };
   autoSelectAllTextDirective.$name = 'autoSelectAllText';
 
-  /**
-   * Directive to select all text within a node upon focus
-   * @returns {Object} DDO
-   * @see https://docs.angularjs.org/api/ng/service/$compile
-   */
-  var selectAllTextDirective = function selectAllTextDirective() {
+  selectAllTextDirective = function selectAllTextDirective() {
     return {
-      controller: 'rangeSelectCtrl',
+      controller: 'selectionSelectCtrl',
       link: function link(scope, el) {
         el.bind('focus', angular.bind(scope, scope.$rangeSelect));
 
@@ -125,14 +122,9 @@
   };
   selectAllTextDirective.$name = 'selectAllText';
 
-  /**
-   * Directive to automatically select arbitrary range within node upon initial render
-   * @returns {Object} DDO
-   * @see https://docs.angularjs.org/api/ng/service/$compile
-   */
-  var autoSelectTextDirective = function autoSelectTextDirective(rangeParseOptions) {
+  autoSelectTextDirective = function autoSelectTextDirective(rangeParseOptions) {
     return {
-      controller: 'rangeSelectCtrl',
+      controller: 'selectionSelectCtrl',
       require: 'ngModel',
       compile: function compile(tElm) {
         tElm.focus();
@@ -151,17 +143,12 @@
       }
     };
   };
-  autoSelectTextDirective.$inject = ['rangeParseOptions'];
+  autoSelectTextDirective.$inject = ['selectionParseOptions'];
   autoSelectTextDirective.$name = 'autoSelectText';
 
-  /**
-   * Directive to select arbitrary text within a node upon focus
-   * @returns {Object} DDO
-   * @see https://docs.angularjs.org/api/ng/service/$compile
-   */
-  var selectTextDirective = function selectText(rangeParseOptions) {
+  selectTextDirective = function selectText(rangeParseOptions) {
     return {
-      controller: 'rangeSelectCtrl',
+      controller: 'selectionSelectCtrl',
       link: function link(scope, el, attrs) {
         el.bind('focus', function () {
           scope.$rangeSelect(rangeParseOptions(scope, attrs));
@@ -173,12 +160,12 @@
       }
     };
   };
-  selectTextDirective.$inject = ['rangeParseOptions'];
+  selectTextDirective.$inject = ['selectionParseOptions'];
   selectTextDirective.$name = 'selectText';
 
-  angular.module('decipher.range', [])
-    .value('rangeParseOptions', rangeParseOptions)
-    .controller('rangeSelectCtrl', rangeSelectCtrl)
+  angular.module('badwing.selection', [])
+    .value('selectionParseOptions', selectionParseOptions)
+    .controller('selectionSelectCtrl', selectionSelectCtrl)
     .directive(autoSelectAllTextDirective.$name, autoSelectAllTextDirective)
     .directive(autoSelectTextDirective.$name, autoSelectTextDirective)
     .directive(selectAllTextDirective.$name, selectAllTextDirective)
