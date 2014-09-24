@@ -46,10 +46,8 @@
 
       <div class="row" ng-controller="ExampleCtrl">
         <div class="col c8"><ng-include src="example.id + '-template'"></ng-include></div>
-        <div class="col c2">
-          <button ng-click="reverse()" class="btn btn-sm">Reverse</button>
-        </div>
-        <div class="col c2">
+        <div class="col c4">
+          <button ng-click="reverse()" class="btn btn-sm">Update Model</button>
           <button ng-click="reset()" class="btn btn-sm">Reset</button>
         </div>
       </div>
@@ -57,15 +55,15 @@
       <h3>Code</h3>
 
       <span ng-show="example.js">JS: </span><pre highlight="example.js"><code class="js"></code></pre>
-      
+
       <span>HTML: </span><pre highlight="example.template"><code class="html"></code></pre>
-      
-      
+
+
     </div>
   </div>
-  
+
   <h2><a target="_blank" href="https://github.com/boneskull/angular-selection">More Information @ GitHub<i class="icon-right-dir"></i></a></h2>
-  
+
   <small style="float: right; padding-bottom: 20px;">&copy; 2014 Christopher Hiller.  Licensed MIT.</small>
 </div>
 </body>

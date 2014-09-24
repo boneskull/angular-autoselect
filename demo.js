@@ -8,33 +8,33 @@
     {
       id: 'auto-select-all-text',
       title: 'Auto-Select All Text',
-      template: '<textarea ng-model="foo" auto-select></textarea>',
-      description: 'This example auto-selects all text in a field.'
+      template: '<textarea ng-model="data.foo" auto-select></textarea>',
+      description: 'This example auto-selects all text in a field upon model update.'
     },
     {
       id: 'auto-select-all-text-once',
       title: 'Auto-Select All Text (Once)',
-      template: '<textarea ng-model="foo" auto-select="{once: true}"></textarea>',
-      description: 'This example auto-selects all text in a field, but will only do this the first time the input field receives a value. Resetting will have no effect on the selection until the markup is removed and re-added to the DOM.'
+      template: '<textarea ng-model="data.foo" auto-select="{once: true}"></textarea>',
+      description: 'This example auto-selects all text in a field upon model update, but will only do this the first time the input field receives a value. Resetting will have no effect on the selection until the markup is removed and re-added to the DOM.'
     },
     {
       id: 'auto-select-range',
       title: 'Auto-Select Range',
-      template: '<textarea ng-model="foo" auto-select="{start: 10, end: 20}">',
+      template: '<textarea ng-model="data.foo" auto-select="{start: 10, end: 20}">',
       description: 'This example shows how a portion of text can be selected based on character index.'
     },
     {
       id: 'auto-select-substring',
       title: 'Auto-Select Substring',
-      template: '<textarea ng-model="foo" auto-select="{match: \'thematizes\'}">',
+      template: '<textarea ng-model="data.foo" auto-select="{match: \'thematizes\'}">',
       description: 'This example shows how a substring can be selected.'
     },
     {
       id: 'auto-select-regexp',
       title: 'Auto-Select Regular Expression',
-      template: '<textarea ng-model="foo" auto-select="{match: match}">',
+      template: '<textarea ng-model="data.foo" auto-select="{match: match}">',
       description: 'This example shows how a <code>RegExp</code> can be used to perform a selection.  Note that you cannot declare a <code>RegExp</code> object within an AngularJS expression.',
-      js: '$scope.match = /of\\s.+\\sboundaries/;'
+      js: '$scope.match = /(of\\s.+\\sboundaries|eht)/;'
     }
   ];
 
@@ -62,16 +62,18 @@
         $scope.$digest();
       });
     };
-    
+
     $scope.reverse = function reverse() {
-      var arr = Array.prototype.slice.call($scope.foo);
+      var arr = Array.prototype.slice.call($scope.data.foo);
       arr.reverse();
-      $scope.foo = arr.join('');
+      $scope.data.foo = arr.join('');
     };
 
-    $scope.match = /of\s.+\sboundaries/;
-    
-    $scope.foo = foo;
+    $scope.match = /(of\s.+\sboundaries|eht)/;
+
+    $scope.data = {
+      foo: foo
+    };
   };
 
   /**
@@ -86,7 +88,7 @@
 
     $scope.examples = examples;
     $scope.select($location.path().substring(1) || examples[0].id);
-    
+
   };
   MainCtrl.$inject = ['$scope', '$location', '$anchorScroll'];
 
