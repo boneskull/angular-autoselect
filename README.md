@@ -52,20 +52,6 @@ $ bower install angular-selection
 
 **angular-selection** is a [UMD](https://github.com/umdjs/umd) module.
 
-## API
-
-This module exposes a `rangeSelectCtrl`.  This controller exposes the following function on its Scope:
-
-### $rangeSelect(options) 
-
-Select the text in an input node.  Defaults to select all text.
-
-**Parameters**
-
-- **options**: `Object` *optional*, Options
-- **options.begin**: `number` *optional*, Character index where to begin the selection; defaults to `0`
-- **options.end**: `number` *optional*, Character index where to end the selection; defaults to the `length` of the node's value.
-
 ## TODO
 
 - Allow selections based on `RegExp` and `String` 
