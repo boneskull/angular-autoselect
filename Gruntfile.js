@@ -27,8 +27,8 @@ module.exports = function (grunt) {
         commitFiles: [
           'package.json',
           'bower.json',
-          'range.min.js',
-          'range.min.js.map'
+          'selection.min.js',
+          'selection.min.js.map'
         ],
         createTag: true,
         tagName: 'v%VERSION%',
