@@ -17,157 +17,124 @@
   'use strict';
 
   /**
-   *
-   * @typedef {Object} SelectionOptions
-   * @property {number} begin Where to begin the range selection
+   * Options for autoSelect directive.
+   * @typedef {Object} AutoSelectOptions
+   * @property {number} start Where to start the range selection
    * @property {number} end Where to end the range selection
+   * @property {boolean} once Perform the selection only once
+   * @property {(string|RegExp)} match String or RegExp to match within the field value
    */
-
-  var selectTextDirective,
-    autoSelectTextDirective,
-    selectAllTextDirective,
-    autoSelectAllTextDirective,
-    selectionParseOptions,
-    selectionSelectCtrl;
 
   /**
-   * Parses directive options from attributes
-   * @param {angular.Scope} scope AngularJS Scope
-   * @param {$compile.directive.Attributes} attrs AngularJS Attributes object
-   * @returns {SelectionOptions}
+   * Provides various ways to automatically select text.
+   * @returns {{require: string, compile: Function}}
    */
-  selectionParseOptions = function selectionParseOptions(scope, attrs) {
-    var options = scope.$eval(attrs.selectText) || {};
-    if (!angular.isObject(options)) {
-      options = {};
-    }
-    options.begin = scope.$eval(attrs.begin) || options.begin;
-    options.end = scope.$eval(attrs.end) || options.end;
-    return options;
-  };
-
-  /**
-   * Common controller used by the directives.
-   * @param {angular.Scope} $scope AngularJS Scope
-   * @param {angular.element} $element jqLite/jQuery Element
-   */
-  selectionSelectCtrl = function selectionSelectCtrl($scope, $element) {
+  var autoSelectDirective = function autoSelectDirective($log) {
 
     /**
-     * The node name of a <textarea> element
-     * @const
-     * @type {string}
+     * Determines if a value is a `RegExp` object.
+     * @param {*} [value]
+     * @returns {boolean}
      */
-    var TEXTAREA = 'TEXTAREA';
+    var isRegExp = function isRegExp(value) {
+      return Object.prototype.toString.call(value) === '[object RegExp]';
+    };
 
-      /**
-       * Select the text in an input node.  Defaults to select all text.
-       * @param {SelectionOptions} [options] Options
-       * @todo Evaluate completely loosening restrictions on nodes
-       */
-    $scope.$rangeSelect = function $rangeSelect(options) {
-      var node = $element[0],
-          length,
+    /**
+     * Performs the text selection.
+     * @param {angular.element} element Element to perform selection on
+     * @param {AutoSelectOptions} [options={}] Any options
+     */
+    var select = function select(element, options) {
+        var value = element.val(),
+          length = value.length,
+          node = element[0],
+          match,
+          matched,
           start,
           end;
 
-      options = options || {};
+        options = options || {};
 
-      length = $element.val().length;
-      start = options.start || 0;
-      end = options.end || length;
-      if (angular.isDefined(node.selectionStart)) {
-        node.selectionStart = start;
-        node.selectionEnd = end;
-      }
+        match = options.match;
+        if (match) {
+          if (isRegExp(match) && (matched = value.match(match))) {
+            start = matched.index;
+            end = start + matched[0].length;
+            /*jshint -W052 */
+          } else if (angular.isString(match) && ~(start = value.indexOf(match))) {
+            end = start + match.length;
+          } else {
+            return;
+          }
+        } else {
+          start = options.start || 0;
+          end = options.end || length;
+        }
+        
+        if (~start) {
+          node.setSelectionRange(start, end);
+        }
+      },
+      
+      /**
+       * Parses directive options from attributes
+       * @param {angular.Scope} scope AngularJS Scope
+       * @param {string} attr Raw attribute value
+       * @returns {AutoSelectOptions}
+       */
+      parseOptions = function parseOptions(scope, attr) {
+        var options = {},
+          attr_options;
+        
+        attr_options = scope.$eval(attr) || {};
+        
+        if (angular.isString(attr_options) || isRegExp(attr_options)) {
+          options.match = attr_options;
+          delete options.start;
+          delete options.end;
+          delete options.once;
+        } else if (angular.isObject(attr_options)) {
+          angular.extend(options, attr_options);
+        }
+        
+        return options;
+      };
 
-    };
-  };
-  selectionSelectCtrl.$inject = ['$scope', '$element', '$attrs'];
 
-  autoSelectAllTextDirective = function autoSelectAllTextDirective() {
     return {
-      controller: 'selectionSelectCtrl',
       require: 'ngModel',
-      compile: function compile(tElm) {
-        tElm.focus();
-        return function link(scope, el, attrs, ngModel) {
-          var render = ngModel.$render;
-          ngModel.$render = function $render() {
-            if (ngModel.$isEmpty(ngModel.$viewValue)) {
-              el.val('');
-            } else {
-              el.val(ngModel.$viewValue);
-              scope.$rangeSelect();
-              ngModel.$render = render;
-            }
+      compile: function compile(tElement, tAttrs) {
+        var link;
+        try {
+          tElement[0].selectionStart;
+          link = function link(scope, element, attrs, ngModel) {
+            var render = ngModel.$render;
+            ngModel.$render = function $render() {
+              var options;
+              if (ngModel.$isEmpty(ngModel.$viewValue)) {
+                element.val('');
+              } else {
+                options = parseOptions(scope, attrs.autoSelect);
+                element.val(ngModel.$viewValue);
+                select(element, options);
+                if (options.once) {
+                  ngModel.$render = render;
+                }
+              }
+            };
           };
-        };
+        } catch (ignored) {
+          $log.warn('Element type "%s" is not supported.  For a list of supported types, see:\nhttps://html.spec.whatwg.org/multipage/forms.html#do-not-apply', tAttrs.type);
+          link = angular.noop;
+        }
+        return link;
       }
     };
   };
-  autoSelectAllTextDirective.$name = 'autoSelectAllText';
-
-  selectAllTextDirective = function selectAllTextDirective() {
-    return {
-      controller: 'selectionSelectCtrl',
-      link: function link(scope, el) {
-        el.bind('focus', angular.bind(scope, scope.$rangeSelect));
-
-        scope.$on('$destroy', function () {
-          el.unbind('focus');
-        });
-      }
-    };
-  };
-  selectAllTextDirective.$name = 'selectAllText';
-
-  autoSelectTextDirective = function autoSelectTextDirective(rangeParseOptions) {
-    return {
-      controller: 'selectionSelectCtrl',
-      require: 'ngModel',
-      compile: function compile(tElm) {
-        tElm.focus();
-        return function link(scope, el, attrs, ngModel) {
-          var render = ngModel.$render;
-          ngModel.$render = function $render() {
-            if (ngModel.$isEmpty(ngModel.$viewValue)) {
-              el.val('');
-            } else {
-              el.val(ngModel.$viewValue);
-              scope.$rangeSelect(rangeParseOptions(scope, attrs));
-              ngModel.$render = render;
-            }
-          };
-        };
-      }
-    };
-  };
-  autoSelectTextDirective.$inject = ['selectionParseOptions'];
-  autoSelectTextDirective.$name = 'autoSelectText';
-
-  selectTextDirective = function selectText(rangeParseOptions) {
-    return {
-      controller: 'selectionSelectCtrl',
-      link: function link(scope, el, attrs) {
-        el.bind('focus', function () {
-          scope.$rangeSelect(rangeParseOptions(scope, attrs));
-        });
-
-        scope.$on('$destroy', function () {
-          el.unbind('focus');
-        });
-      }
-    };
-  };
-  selectTextDirective.$inject = ['selectionParseOptions'];
-  selectTextDirective.$name = 'selectText';
+  autoSelectDirective.$inject = ['$log'];
+  autoSelectDirective.$name = 'autoSelect';
 
   angular.module('badwing.selection', [])
-    .value('selectionParseOptions', selectionParseOptions)
-    .controller('selectionSelectCtrl', selectionSelectCtrl)
-    .directive(autoSelectAllTextDirective.$name, autoSelectAllTextDirective)
-    .directive(autoSelectTextDirective.$name, autoSelectTextDirective)
-    .directive(selectAllTextDirective.$name, selectAllTextDirective)
-    .directive(selectTextDirective.$name, selectTextDirective);
+    .directive(autoSelectDirective.$name, autoSelectDirective);
 });

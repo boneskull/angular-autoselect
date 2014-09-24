@@ -5,7 +5,7 @@
   "authors": [
     "Christopher Hiller <chiller@badwing.com>"
   ],
-  "description": "AngularJS directives for working with text selections within input fields",
+  "description": "AngularJS directive(s) to automatically select text within input fields",
   "main": "selection.js",
   "moduleType": [
     "amd",
@@ -20,7 +20,9 @@
     "select",
     "selection",
     "input",
-    "fields"
+    "fields",
+    "autoselect",
+    "autoselection"
   ],
   "license": "MIT",
   "ignore": [
@@ -30,6 +32,7 @@
     "package.json"
   ],
   "dependencies": {
-    "angular": "*"
-  }
+    "angular": "~1.2.25"
+  },
+  "devDependencies": {}
 }

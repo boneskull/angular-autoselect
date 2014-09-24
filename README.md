@@ -1,42 +1,33 @@
 # angular-selection
 
-AngularJS directives to select text within input fields
+AngularJS directive(s) to automatically select text within input fields.
 
+## [Demo](http://boneskull.github.io/angular-selection)
+ 
 ## Usage
+
+Include this module:
 
 ```js
 angular.module('myModule', ['badwing.selection']);
 ```
 
-Automatically select all text in an input field when it is initially rendered:
+Use the `autoSelect` directive:
 
 ```html
-<input type="text" ng-model="foo" auto-select-all-text/>
+<input type="text" ng-model="foo" auto-select="options"/>
 ```
 
-Select all text upon focus:
+Where `options` is an object with the following properties:
 
-```html
-<input type="text" ng-model="foo" select-all-text/>
-```
+- **once** `{boolean}`: If true, only auto-select once.  Default `false`.
+- **start** `{number}`: If set, begin the selection at this index within the input field's value.  Default `0`.
+- **end** `{number}`: If set, end the selection at this index within the input field's value.  Default is the length of the value.
+- **match** `{(string|RegExp)}`: If a `string`, select only the substring, if present.  If a `RegExp`, then select all the text matched by the regular expression.  If the directive cannot find the substring or the regular expression, it will not attempt to select text.
 
-Automatically select characters three through five when initially rendered:
+The `autoSelect` directive requires the `ngModel` directive.
 
-```html
-<input type="text" ng-model="foo" auto-select-text="{begin: 2, end: 4}"/>
-```
-
-This is equivalent:
-
-```html
-<input type="text" ng-model="foo" auto-select-text begin="2" end="4"/>
-```
-
-When focused, select the character represented by numeric Scope variable `bar`, through the end of the value:
-
-```html
-<input type="text" ng-model="foo" select-text="{begin: bar}"/>
-```
+> Note: Not all input fields are supported by all browsers.  [Read about support](https://html.spec.whatwg.org/multipage/forms.html#do-not-apply).
 
 ## Installation
 
@@ -51,10 +42,6 @@ $ bower install angular-selection
 ```
 
 **angular-selection** is a [UMD](https://github.com/umdjs/umd) module.
-
-## TODO
-
-- Allow selections based on `RegExp` and `String` 
 
 ## Author
 
