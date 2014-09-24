@@ -1,100 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Angular-selection by boneskull</title>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name="fragment" content="!" />
+  <title>angular-selection demo</title>
+  <link href='http://fonts.googleapis.com/css?family=PT+Sans|Fira+Mono' rel='stylesheet'
+        type='text/css'>
+  <link rel="stylesheet" type="text/css"
+        href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css"/>
+  <link rel="stylesheet" href="css/demo.css" type="text/css"/>
+  <link rel="stylesheet" href="css/collapse.css" type="text/css"/>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
+  <script src="selection.js"></script>
+  <script src="demo.js"></script>
+</head>
+<body data-ng-app="demo">
+<a href="https://github.com/boneskull/angular-selection"><img
+  style="position: absolute; top: 0; left: 0; border: 0;"
+  src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67"
+  alt="Fork me on GitHub"
+  data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<div class="container" ng-controller="MainCtrl">
+  <div>
+    <h1>angular-selection</h1>
+  </div>
 
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Angular-selection</h1>
-        <p>AngularJS directives to select text within input fields</p>
-        <p class="view"><a href="https://github.com/boneskull/angular-selection">View the Project on GitHub <small>boneskull/angular-selection</small></a></p>
-        <ul>
-          <li><a href="https://github.com/boneskull/angular-selection/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/boneskull/angular-selection/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/boneskull/angular-selection">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="angular-selection" class="anchor" href="#angular-selection"><span class="octicon octicon-link"></span></a>angular-selection</h1>
+  <p>This is a demo for <a
+    href="https://github.com/boneskull/angular-selection">angular-selection</a>, a module for <a
+    href="http://angularjs.org">AngularJS</a>.</p>
 
-<p>AngularJS directive(s) to automatically select text within input fields.</p>
+  <p>It currently provides a directive, <code>autoSelect</code>, which will cause text to be
+    automatically selected, with several options.</p>
 
-<h2>
-<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a><a href="http://boneskull.github.io/angular-selection">Demo</a>
-</h2>
+  <div ng-repeat="example in examples">
+    <h2 id="{{example.id}}"><a ng-click="select(example.id)"><i class="icon-right-dir" ng-hide="selected === example.id"></i><i class="icon-down-dir" ng-show="selected === example.id"></i> {{example.title}}</a>
+    </h2>
 
-<h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+    <p><ng-include src="example.id + '-description'"></ng-include></p>
 
-<p>Include this module:</p>
+    <div ng-if="selected === example.id">
 
-<div class="highlight highlight-js"><pre><span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'myModule'</span><span class="p">,</span> <span class="p">[</span><span class="s1">'badwing.selection'</span><span class="p">]);</span>
-</pre></div>
+      <h3>Example</h3>
 
-<p>Use the <code>autoSelect</code> directive:</p>
+      <div class="row" ng-controller="ExampleCtrl">
+        <div class="col c8"><ng-include src="example.id + '-template'"></ng-include></div>
+        <div class="col c2">
+          <button ng-click="reverse()" class="btn btn-sm">Reverse</button>
+        </div>
+        <div class="col c2">
+          <button ng-click="reset()" class="btn btn-sm">Reset</button>
+        </div>
+      </div>
 
-<div class="highlight highlight-html"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">ng-model=</span><span class="s">"foo"</span> <span class="na">auto-select=</span><span class="s">"options"</span><span class="nt">/&gt;</span>
-</pre></div>
+      <h3>Code</h3>
 
-<p>Where <code>options</code> is an object with the following properties:</p>
-
-<ul>
-<li>
-<strong>once</strong> <code>{boolean}</code>: If true, only auto-select once.  Default <code>false</code>.</li>
-<li>
-<strong>start</strong> <code>{number}</code>: If set, begin the selection at this index within the input field's value.  Default <code>0</code>.</li>
-<li>
-<strong>end</strong> <code>{number}</code>: If set, end the selection at this index within the input field's value.  Default is the length of the value.</li>
-<li>
-<strong>match</strong> <code>{(string|RegExp)}</code>: If a <code>string</code>, select only the substring, if present.  If a <code>RegExp</code>, then select all the text matched by the regular expression.  If the directive cannot find the substring or the regular expression, it will not attempt to select text.</li>
-</ul><p>The <code>autoSelect</code> directive requires the <code>ngModel</code> directive.</p>
-
-<blockquote>
-<p>Note: Not all input fields are supported by all browsers.  <a href="https://html.spec.whatwg.org/multipage/forms.html#do-not-apply">Read about support</a>.</p>
-</blockquote>
-
-<h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
-
-<pre lang="shell"><code>$ npm install angular-selection
-</code></pre>
-
-<p>or</p>
-
-<pre lang="shell"><code>$ bower install angular-selection
-</code></pre>
-
-<p><strong>angular-selection</strong> is a <a href="https://github.com/umdjs/umd">UMD</a> module.</p>
-
-<h2>
-<a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
-
-<p><a href="http://boneskull.github.io">Christopher Hiller</a></p>
-
-<h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>MIT</p>
-      </section>
+      <span ng-show="example.js">JS: </span><pre highlight="example.js"><code class="js"></code></pre>
+      
+      <span>HTML: </span><pre highlight="example.template"><code class="html"></code></pre>
+      
+      
     </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/boneskull">boneskull</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+  </div>
+  
+  <h2><a target="_blank" href="https://github.com/boneskull/angular-selection">More Information @ GitHub<i class="icon-right-dir"></i></a></h2>
+  
+  <small style="float: right; padding-bottom: 20px;">&copy; 2014 Christopher Hiller.  Licensed MIT.</small>
+</div>
+</body>
 </html>
