@@ -51,14 +51,26 @@ module.exports = function (grunt) {
         src: '<%= pkg.main %>',
         dest: 'selection.min.js'
       }
+    },
+    copy: {
+      demo: {
+        src: '<%= pkg.main %>',
+        dest: 'demo/<%= pkg.main %>'
+      }
+    },
+    'gh-pages': {
+      options: {
+        base: 'demo'
+      },
+      src: ['**']
     }
-
   });
 
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('build', ['uglify']);
+  grunt.registerTask('build', ['uglify', 'copy']);
+  grunt.registerTask('demo', ['build', 'gh-pages']);
 
   grunt.registerTask('release', function (target) {
     grunt.task.run('bump-only:' + target);

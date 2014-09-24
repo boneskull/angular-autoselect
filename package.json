@@ -30,8 +30,10 @@
   "homepage": "https://github.com/boneskull/angular-selection",
   "devDependencies": {
     "grunt-bump": "0.0.15",
+    "grunt-contrib-copy": "^0.6.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.5.1",
+    "grunt-gh-pages": "^0.9.1",
     "jshint-stylish": "^0.4.0",
     "load-grunt-tasks": "^0.6.0",
     "time-grunt": "^1.0.0"
