@@ -2,3 +2,4 @@
 Gruntfile.js
 *.min.js*
 bower.json
+demo/

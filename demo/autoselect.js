@@ -71,12 +71,12 @@
           start = options.start || 0;
           end = options.end || length;
         }
-        
+
         if (~start) {
           node.setSelectionRange(start, end);
         }
       },
-      
+
       /**
        * Parses directive options from attributes
        * @param {angular.Scope} scope AngularJS Scope
@@ -86,9 +86,9 @@
       parseOptions = function parseOptions(scope, attr) {
         var options = {},
           attr_options;
-        
+
         attr_options = scope.$eval(attr) || {};
-        
+
         if (angular.isString(attr_options) || isRegExp(attr_options)) {
           options.match = attr_options;
           delete options.start;
@@ -97,7 +97,7 @@
         } else if (angular.isObject(attr_options)) {
           angular.extend(options, attr_options);
         }
-        
+
         return options;
       };
 
@@ -135,6 +135,6 @@
   autoSelectDirective.$inject = ['$log'];
   autoSelectDirective.$name = 'autoSelect';
 
-  angular.module('badwing.selection', [])
+  angular.module('badwing.autoselect', [])
     .directive(autoSelectDirective.$name, autoSelectDirective);
 });

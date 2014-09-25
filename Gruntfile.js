@@ -1,12 +1,14 @@
 'use strict';
 
-module.exports = function (grunt) {
-  var path = require('path');
+module.exports = function gruntfile(grunt) {
+  var path = require('path'),
+    pkg = grunt.file.readJSON('package.json'),
+    min = path.basename(pkg.main, '.js') + '.min.js';
 
   require('time-grunt')(grunt);
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: pkg,
     jshint: {
       main: [
         'Gruntfile.js',
@@ -27,8 +29,8 @@ module.exports = function (grunt) {
         commitFiles: [
           'package.json',
           'bower.json',
-          'selection.min.js',
-          'selection.min.js.map'
+          min,
+          min + '.map'
         ],
         createTag: true,
         tagName: 'v%VERSION%',
@@ -48,7 +50,7 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= pkg.main %>',
-        dest: 'selection.min.js'
+        dest: min
       }
     },
     copy: {

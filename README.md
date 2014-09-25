@@ -1,15 +1,15 @@
-# angular-selection
+# angular-autoselect
 
 AngularJS directive(s) to automatically select text within input fields.
 
-## [Demo](http://boneskull.github.io/angular-selection)
+## [Demo](http://boneskull.github.io/angular-autoselect)
  
 ## Usage
 
 Include this module:
 
 ```js
-angular.module('myModule', ['badwing.selection']);
+angular.module('myModule', ['badwing.autoselect']);
 ```
 
 Use the `autoSelect` directive:
@@ -32,16 +32,16 @@ The `autoSelect` directive requires the `ngModel` directive.
 ## Installation
 
 ```shell
-$ npm install angular-selection
+$ npm install angular-autoselect
 ```
 
 or
 
 ```shell
-$ bower install angular-selection
+$ bower install angular-autoselect
 ```
 
-**angular-selection** is a [UMD](https://github.com/umdjs/umd) module.
+**angular-autoselect** is a [UMD](https://github.com/umdjs/umd) module.
 
 ## Author
 
