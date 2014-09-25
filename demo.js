@@ -108,7 +108,7 @@
   };
   highlight.$inject = ['$window'];
 
-  angular.module('demo', ['badwing.selection'])
+  angular.module('demo', ['badwing.autoselect'])
     .run(run)
     .controller('MainCtrl', MainCtrl)
     .controller('ExampleCtrl', ExampleCtrl)
