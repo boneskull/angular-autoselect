@@ -22,13 +22,14 @@ module.exports = function gruntfile(grunt) {
 
     bump: {
       options: {
-        files: ['package.json', 'bower.json'],
+        files: ['package.json', 'bower.json', 'demo/bower.json'],
         updateConfigs: ['pkg'],
         commit: true,
         commitMessage: 'Release v%VERSION%',
         commitFiles: [
           'package.json',
           'bower.json',
+          'demo/bower.json',
           min,
           min + '.map'
         ],
@@ -63,17 +64,52 @@ module.exports = function gruntfile(grunt) {
       options: {
         base: 'demo'
       },
-      src: ['**']
+      src: ['**', '!bower.json']
+    },
+    devUpdate: {
+      main: {
+        options: {
+          semver: false,
+          updateType: 'prompt'
+        }
+      }
+    },
+    'bower-install-simple': {
+      options: {
+        color: true
+      },
+      demo: {
+        options: {
+          directory: 'demo/support'
+        }
+      },
+      main: {
+        options: {
+          directory: 'support',
+          production: true
+        }
+      }
+    },
+    wiredep: {
+      demo: {
+        cwd: 'demo',
+        src: ['demo/index.html'],
+        options: {
+          devDependencies: true
+        }
+      }
     }
+
   });
 
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('build', ['uglify', 'copy']);
-  grunt.registerTask('demo', ['build', 'gh-pages']);
+  grunt.registerTask('build', ['bower-install-simple:main', 'uglify']);
+  grunt.registerTask('build-demo', ['bower-install-simple:demo', 'build', 'wiredep']);
+  grunt.registerTask('publish-docs', ['demo', 'gh-pages']);
 
-  grunt.registerTask('release', function (target) {
+  grunt.registerTask('release', 'Bumps version, builds, commits, and pushes.', function (target) {
     grunt.task.run('bump-only:' + target);
     grunt.task.run('build');
     grunt.task.run('bump-commit');

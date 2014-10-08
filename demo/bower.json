@@ -1,0 +1,25 @@
+{
+  "name": "angular-autoselect-demo",
+  "main": "index.html",
+  "version": "0.3.0",
+  "homepage": "https://github.com/boneskull/angular-autoselect",
+  "authors": [
+    "Christopher Hiller <chiller@badwing.com>"
+  ],
+  "description": "Demo for angular-autoselect",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "support",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-autoselect": "~0.3.0",
+    "angular-fontawesome": "~0.2.0",
+    "highlightjs": "~8.0.0"
+  }
+}

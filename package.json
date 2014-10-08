@@ -22,6 +22,10 @@
     "autoselect",
     "autoselection"
   ],
+  "scripts": {
+    "test": "grunt test",
+    "prepublish": "grunt gh-pages"
+  },
   "author": "Christopher Hiller <chiller@badwing.com>",
   "license": "MIT",
   "bugs": {
@@ -29,12 +33,16 @@
   },
   "homepage": "https://github.com/boneskull/angular-autoselect",
   "devDependencies": {
-    "grunt-bump": "0.0.15",
+    "grunt-bower-install-simple": "^1.0.3",
+    "grunt-bump": "0.0.16",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-copy": "^0.6.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.5.1",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-dev-update": "^0.9.0",
     "grunt-gh-pages": "^0.9.1",
-    "jshint-stylish": "^0.4.0",
+    "grunt-wiredep": "^1.9.0",
+    "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^0.6.0",
     "time-grunt": "^1.0.0"
   }
