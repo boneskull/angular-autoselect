@@ -107,7 +107,7 @@ module.exports = function gruntfile(grunt) {
   grunt.registerTask('test', ['jshint']);
   grunt.registerTask('build', ['bower-install-simple:main', 'uglify']);
   grunt.registerTask('build-demo', ['bower-install-simple:demo', 'build', 'wiredep']);
-  grunt.registerTask('publish-docs', ['demo', 'gh-pages']);
+  grunt.registerTask('publish-docs', ['build-demo', 'gh-pages']);
 
   grunt.registerTask('release', 'Bumps version, builds, commits, and pushes.', function (target) {
     grunt.task.run('bump-only:' + target);
