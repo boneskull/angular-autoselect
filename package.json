@@ -23,8 +23,7 @@
     "autoselection"
   ],
   "scripts": {
-    "test": "grunt test",
-    "prepublish": "grunt gh-pages"
+    "test": "grunt test"
   },
   "author": "Christopher Hiller <chiller@badwing.com>",
   "license": "MIT",
