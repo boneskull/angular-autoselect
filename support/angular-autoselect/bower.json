@@ -1,0 +1,38 @@
+{
+  "name": "angular-autoselect",
+  "version": "0.3.0",
+  "homepage": "https://github.com/boneskull/angular-autoselect",
+  "authors": [
+    "Christopher Hiller <chiller@badwing.com>"
+  ],
+  "description": "AngularJS directive(s) to automatically select text within input fields",
+  "main": "autoselect.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "angular",
+    "angularjs",
+    "range",
+    "text",
+    "select",
+    "selection",
+    "input",
+    "fields",
+    "autoselect",
+    "autoselection"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "Gruntfile.js",
+    "package.json",
+    "demo"
+  ],
+  "dependencies": {
+    "angular": "*"
+  }
+}

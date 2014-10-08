@@ -6,13 +6,18 @@
   <title>angular-autoselect demo</title>
   <link href='http://fonts.googleapis.com/css?family=PT+Sans|Fira+Mono' rel='stylesheet'
         type='text/css'>
-  <link rel="stylesheet" type="text/css"
-        href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/styles/default.min.css"/>
   <link rel="stylesheet" href="css/demo.css" type="text/css"/>
-  <link rel="stylesheet" href="css/collapse.css" type="text/css"/>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.2/highlight.min.js"></script>
-  <script src="autoselect.js"></script>
+
+<!-- bower:css -->
+<link rel="stylesheet" href="support/font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" href="support/highlightjs/styles/default.css" />
+<!-- endbower -->
+<!-- bower:js -->
+<script src="support/angular/angular.js"></script>
+<script src="support/angular-autoselect/autoselect.js"></script>
+<script src="support/angular-fontawesome/dist/angular-fontawesome.js"></script>
+<script src="support/highlightjs/highlight.pack.js"></script>
+<!-- endbower -->
   <script src="demo.js"></script>
 </head>
 <body data-ng-app="demo">
@@ -35,7 +40,7 @@
     automatically selected, with several options.</p>
 
   <div ng-repeat="example in examples">
-    <h2 id="{{example.id}}"><a ng-click="select(example.id)"><i class="icon-right-dir" ng-hide="selected === example.id"></i><i class="icon-down-dir" ng-show="selected === example.id"></i> {{example.title}}</a>
+    <h2 id="{{example.id}}"><a ng-click="select(example.id)"><fa name="caret-right" ng-hide="selected === example.id"></fa><fa name="caret-down" ng-show="selected === example.id"></fa> {{example.title}}</a>
     </h2>
 
     <p><ng-include src="example.id + '-description'"></ng-include></p>
@@ -47,16 +52,16 @@
       <div class="row" ng-controller="ExampleCtrl">
         <div class="col c8"><ng-include src="example.id + '-template'"></ng-include></div>
         <div class="col c4">
-          <button ng-click="reverse()" class="btn btn-sm">Update Model</button>
-          <button ng-click="reset()" class="btn btn-sm">Reset</button>
+          <button ng-click="reverse()" class="btn btn-sm"><fa name="flask"></fa> Tweak Model</button>
+          <button ng-click="reset()" class="btn btn-sm"><fa name="refresh"></fa> Reset</button>
         </div>
       </div>
 
       <h3>Code</h3>
 
-      <span ng-show="example.js">JS: </span><pre highlight="example.js"><code class="js"></code></pre>
+      <span ng-show="example.js">JS: <code ng-model="example.js" lang="js"></code></span>
 
-      <span>HTML: </span><pre highlight="example.template"><code class="html"></code></pre>
+      HTML: <code ng-model="example.html" lang="html"></code>
 
 
     </div>
