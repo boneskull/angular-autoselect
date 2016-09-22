@@ -33,16 +33,16 @@
   "homepage": "https://github.com/boneskull/angular-autoselect",
   "devDependencies": {
     "grunt-bower-install-simple": "^1.0.3",
-    "grunt-bump": "0.0.16",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-copy": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-uglify": "^0.6.0",
-    "grunt-dev-update": "^0.9.0",
-    "grunt-gh-pages": "^0.9.1",
-    "grunt-wiredep": "^1.9.0",
-    "jshint-stylish": "^1.0.0",
-    "load-grunt-tasks": "^0.6.0",
+    "grunt-bump": "0.8.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-dev-update": "^2.0.0",
+    "grunt-gh-pages": "^2.0.0",
+    "grunt-wiredep": "^3.0.1",
+    "jshint-stylish": "^2.2.1",
+    "load-grunt-tasks": "^3.5.2",
     "time-grunt": "^1.0.0"
   }
 }
