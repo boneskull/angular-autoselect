@@ -49,7 +49,17 @@ module.exports = function gruntfile(grunt) {
           ' Licensed <%= pkg.license %> */',
         sourceMap: true
       },
-      dist: {
+      main: {
+        src: 'build/autoselect.umd.js',
+        dest: '<%= pkg.main %>',
+        options: {
+          compress: false,
+          beautify: true,
+          mangle: false,
+          preserveComments: 'all'
+        }
+      },
+      min: {
         src: '<%= pkg.main %>',
         dest: min
       }
@@ -98,6 +108,31 @@ module.exports = function gruntfile(grunt) {
           devDependencies: true
         }
       }
+    },
+    concat: {
+      main: {
+        files: {
+          'build/autoselect.lib.js': ['lib/index.js', 'lib/**/*.js']
+        },
+        options: {
+          process: function (src, filepath) {
+            return '// Source: ' + filepath + '\n' +
+              src.replace(/(^|\n)[ \t]*'use strict';?\s*/g, '$1');
+          }
+        }
+      }
+    },
+    umd: {
+      main: {
+        options: {
+          src: 'build/autoselect.lib.js',
+          dest: 'build/autoselect.umd.js',
+          indent: '  ',
+          deps: {
+            global: 'angular'
+          }
+        }
+      }
     }
 
   });
@@ -105,7 +140,7 @@ module.exports = function gruntfile(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('test', ['jshint']);
-  grunt.registerTask('build', ['bower-install-simple:main', 'uglify']);
+  grunt.registerTask('build', ['concat', 'umd', 'uglify:main', 'uglify:min']);
   grunt.registerTask('build-demo', ['bower-install-simple:demo', 'build', 'wiredep']);
   grunt.registerTask('publish-docs', ['build-demo', 'gh-pages']);
 

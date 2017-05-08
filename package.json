@@ -3,9 +3,6 @@
   "version": "0.3.2",
   "description": "AngularJS directive(s) to automatically select text within input fields",
   "main": "autoselect.js",
-  "peerDependencies": {
-    "angular": "^1.2.23"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/boneskull/angular-autoselect.git"
@@ -35,11 +32,13 @@
     "grunt-bower-install-simple": "^1.0.3",
     "grunt-bump": "0.0.16",
     "grunt-cli": "^0.1.13",
+    "grunt-contrib-concat": "^0.5.0",
     "grunt-contrib-copy": "^0.6.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-dev-update": "^0.9.0",
     "grunt-gh-pages": "^0.9.1",
+    "grunt-umd": "git://github.com/boneskull/grunt-umd",
     "grunt-wiredep": "^1.9.0",
     "jshint-stylish": "^1.0.0",
     "load-grunt-tasks": "^0.6.0",

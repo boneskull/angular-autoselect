@@ -1,0 +1,18 @@
+{
+  "bitwise": true,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "undef": true,
+  "strict": true,
+  "indent": 2,
+  "expr": true,
+  "newcap": false,
+  "browser": true,
+  "quotmark": "single",
+  "predef": ["angular"],
+  "globalstrict": true
+}
