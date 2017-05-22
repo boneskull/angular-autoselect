@@ -4,7 +4,7 @@
   "description": "AngularJS directive(s) to automatically select text within input fields",
   "main": "autoselect.js",
   "peerDependencies": {
-    "angular": "^1.2.23"
+    "angular": "^1.2.31"
   },
   "repository": {
     "type": "git",
